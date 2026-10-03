@@ -50,5 +50,14 @@ namespace ContactsPresentationLayer
                     MessageBox.Show("Contact is not deleted.");
             }
         }
+
+        private void btnAddNew_Click(object sender, EventArgs e)
+        {
+            Form frmAddNewContact = new frmAddEditContacts(-1);
+            frmAddNewContact.ShowDialog();
+
+
+            _RefreshContactsList();
+        }
     }
 }
