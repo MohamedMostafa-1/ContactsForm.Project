@@ -6,9 +6,11 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.IO; //File Exists
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ContactsBusinessLayer;
+using System.Net.Http.Headers;
 
 namespace ContactsPresentationLayer
 {
@@ -32,7 +34,7 @@ namespace ContactsPresentationLayer
             else
                 _Mode = enMode.Update;
 
-            
+
         }
         private void _FillCountriesInComoboBox() {
 
@@ -45,6 +47,121 @@ namespace ContactsPresentationLayer
 
         }
 
-       
+        private void _LoadData()
+        {
+            _FillCountriesInComoboBox();
+
+            if (_Mode == enMode.AddNew)
+            {
+                lblMode.Text = "Add New Contact";
+
+                _Contact = new clsContact();
+              
+                return;
+            }
+
+            _Contact = clsContact.Find(_ContactID);
+
+            if (_Contact == null)
+            {
+                MessageBox.Show("This form will be closed because No Contact with ID = " + _ContactID, "Message Error", MessageBoxButtons.OK);
+                this.Close();
+                return;
+            }
+
+            lblMode.Text = "Edit Contact ID = " + _ContactID;
+            lblContactID.Text = _ContactID.ToString();
+            txtFirstName.Text = _Contact.FirstName;
+            txtLastName.Text = _Contact.LastName;
+            txtEmail.Text = _Contact.Email;
+            txtPhone.Text = _Contact.Phone;
+            txtAddress.Text = _Contact.Address;
+            dtpDateOfBirth.Value = _Contact.DateOfBirth;
+
+            if (!String.IsNullOrEmpty(_Contact.ImagePath) && File.Exists(_Contact.ImagePath))
+                pictureBox1.ImageLocation = _Contact.ImagePath;
+            else
+                pictureBox1.Image = null;
+
+
+            //if (_Contact.ImagePath != "" && File.Exists(_Contact.ImagePath))
+            //{
+            //    pictureBox1.Load(_Contact.ImagePath);
+            //}
+            //else
+            //    pictureBox1.Image = null;
+
+
+
+            llRemoveImage.Visible = (_Contact.ImagePath != "");
+
+            clsCountries Country = clsCountries.Find(_Contact.CountryID);
+            cbCountry.SelectedIndex = cbCountry.FindString(Country.CountryName);
+            //cbCountry.SelectedIndex = cbCountry.FindString(clsCountries.Find(_Contact.CountryID).CountryName);
+
+
+        }
+
+        private void frmAddEditContacts_Load(object sender, EventArgs e)
+        {
+            
+            _LoadData();
+
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            _Contact.FirstName = txtFirstName.Text;
+            _Contact.LastName = txtLastName.Text;
+            _Contact.Email = txtEmail.Text;
+            _Contact.Phone = txtPhone.Text;
+            _Contact.Address = txtAddress.Text;
+            _Contact.CountryID = clsCountries.Find(cbCountry.Text).ID;
+
+            if (pictureBox1.ImageLocation != null)
+                _Contact.ImagePath = pictureBox1.ImageLocation;
+            else
+                _Contact.ImagePath = "";
+
+            if (_Contact.Save())
+                MessageBox.Show("Data Saved Successfully.");
+            else
+                MessageBox.Show("Error: Data Save Is Failed.");
+
+            _Mode = enMode.Update;
+            lblMode.Text = "Edit Contact ID = " + _Contact.ID;
+            lblContactID.Text = _Contact.ID.ToString();
+
+
+
+        }
+
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void llSetImage_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            openFileDialog1.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.gif;*.bmp";
+            openFileDialog1.FilterIndex = 1;
+            openFileDialog1.RestoreDirectory = true;
+
+            if(openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                string ImagePath = openFileDialog1.FileName;
+
+                pictureBox1.Load(ImagePath);
+                
+
+            }
+        }
+
+        private void llRemoveImage_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            pictureBox1.ImageLocation = null;
+            llRemoveImage.Visible = false;
+
+        }
     }
 }

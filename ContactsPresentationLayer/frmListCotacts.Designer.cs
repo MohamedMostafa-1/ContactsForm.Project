@@ -92,7 +92,7 @@
             this.Controls.Add(this.btnAddNew);
             this.Controls.Add(this.dgvAllContacts);
             this.Name = "frmListCotacts";
-            this.Text = "Form1";
+            this.Text = "List Contacts";
             this.Load += new System.EventHandler(this.frmListContacts_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvAllContacts)).EndInit();
             this.contextMenuStrip1.ResumeLayout(false);

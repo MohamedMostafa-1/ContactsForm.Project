@@ -44,12 +44,13 @@
             this.dtpDateOfBirth = new System.Windows.Forms.DateTimePicker();
             this.lblMode = new System.Windows.Forms.Label();
             this.cbCountry = new System.Windows.Forms.ComboBox();
-            this.llOpenFileDialog = new System.Windows.Forms.LinkLabel();
-            this.lblAddress = new System.Windows.Forms.TextBox();
+            this.llSetImage = new System.Windows.Forms.LinkLabel();
+            this.txtAddress = new System.Windows.Forms.TextBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.llRemoveImage = new System.Windows.Forms.LinkLabel();
             this.btnClose = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -196,30 +197,32 @@
             this.cbCountry.Size = new System.Drawing.Size(273, 21);
             this.cbCountry.TabIndex = 16;
             // 
-            // llOpenFileDialog
+            // llSetImage
             // 
-            this.llOpenFileDialog.AutoSize = true;
-            this.llOpenFileDialog.Font = new System.Drawing.Font("Tahoma", 12F);
-            this.llOpenFileDialog.Location = new System.Drawing.Point(325, 81);
-            this.llOpenFileDialog.Name = "llOpenFileDialog";
-            this.llOpenFileDialog.Size = new System.Drawing.Size(81, 19);
-            this.llOpenFileDialog.TabIndex = 17;
-            this.llOpenFileDialog.TabStop = true;
-            this.llOpenFileDialog.Text = "Set Image";
+            this.llSetImage.AutoSize = true;
+            this.llSetImage.Font = new System.Drawing.Font("Tahoma", 12F);
+            this.llSetImage.Location = new System.Drawing.Point(325, 81);
+            this.llSetImage.Name = "llSetImage";
+            this.llSetImage.Size = new System.Drawing.Size(81, 19);
+            this.llSetImage.TabIndex = 17;
+            this.llSetImage.TabStop = true;
+            this.llSetImage.Text = "Set Image";
+            this.llSetImage.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.llSetImage_LinkClicked);
             // 
-            // lblAddress
+            // txtAddress
             // 
-            this.lblAddress.Location = new System.Drawing.Point(133, 370);
-            this.lblAddress.Multiline = true;
-            this.lblAddress.Name = "lblAddress";
-            this.lblAddress.Size = new System.Drawing.Size(273, 85);
-            this.lblAddress.TabIndex = 18;
+            this.txtAddress.Location = new System.Drawing.Point(133, 370);
+            this.txtAddress.Multiline = true;
+            this.txtAddress.Name = "txtAddress";
+            this.txtAddress.Size = new System.Drawing.Size(273, 85);
+            this.txtAddress.TabIndex = 18;
             // 
             // pictureBox1
             // 
             this.pictureBox1.Location = new System.Drawing.Point(329, 110);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(166, 158);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 19;
             this.pictureBox1.TabStop = false;
             // 
@@ -233,6 +236,7 @@
             this.llRemoveImage.TabIndex = 20;
             this.llRemoveImage.TabStop = true;
             this.llRemoveImage.Text = "Remove";
+            this.llRemoveImage.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.llRemoveImage_LinkClicked);
             // 
             // btnClose
             // 
@@ -242,6 +246,7 @@
             this.btnClose.TabIndex = 21;
             this.btnClose.Text = "Close";
             this.btnClose.UseVisualStyleBackColor = true;
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
             // btnSave
             // 
@@ -251,6 +256,11 @@
             this.btnSave.TabIndex = 22;
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
             // 
             // frmAddEditContacts
             // 
@@ -261,8 +271,8 @@
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.llRemoveImage);
             this.Controls.Add(this.pictureBox1);
-            this.Controls.Add(this.lblAddress);
-            this.Controls.Add(this.llOpenFileDialog);
+            this.Controls.Add(this.txtAddress);
+            this.Controls.Add(this.llSetImage);
             this.Controls.Add(this.cbCountry);
             this.Controls.Add(this.lblMode);
             this.Controls.Add(this.dtpDateOfBirth);
@@ -281,6 +291,7 @@
             this.Controls.Add(this.label1);
             this.Name = "frmAddEditContacts";
             this.Text = "Add / Edit Contacts";
+            this.Load += new System.EventHandler(this.frmAddEditContacts_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -305,11 +316,12 @@
         private System.Windows.Forms.DateTimePicker dtpDateOfBirth;
         private System.Windows.Forms.Label lblMode;
         private System.Windows.Forms.ComboBox cbCountry;
-        private System.Windows.Forms.LinkLabel llOpenFileDialog;
-        private System.Windows.Forms.TextBox lblAddress;
+        private System.Windows.Forms.LinkLabel llSetImage;
+        private System.Windows.Forms.TextBox txtAddress;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.LinkLabel llRemoveImage;
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.Button btnSave;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
     }
 }

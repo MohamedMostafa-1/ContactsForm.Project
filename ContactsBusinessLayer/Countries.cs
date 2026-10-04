@@ -21,20 +21,20 @@ namespace ContactsBusinessLayer
         private enMode Mode = enMode.AddNew;
 
         public int ID { get; set; }
-        public string Name { get; set; }
+        public string CountryName { get; set; }
 
         public clsCountriesData.stCountryInfo DALCountryInfo = new clsCountriesData.stCountryInfo();
 
         public clsCountries()
         {
             ID = -1;
-            Name = "";
+            CountryName = "";
             Mode = enMode.AddNew;
         }
         private clsCountries(clsCountriesData.stCountryInfo DALCountryInfo)
         {
             ID = DALCountryInfo.ID;
-            Name = DALCountryInfo.Name;
+            CountryName = DALCountryInfo.Name;
             Mode = enMode.Update;
         }
 
@@ -78,7 +78,7 @@ namespace ContactsBusinessLayer
         private void _FillDALCountryInfoByObject()
         {
             DALCountryInfo.ID = this.ID;
-            DALCountryInfo.Name = this.Name;
+            DALCountryInfo.Name = this.CountryName;
         }
         private bool _AddNewCountry()
         {
